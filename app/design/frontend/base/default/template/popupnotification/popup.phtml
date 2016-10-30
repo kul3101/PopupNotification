@@ -1,0 +1,51 @@
+<?php
+/**
+ * Codeclinics.com
+ * info@codeclinics.com
+ * Template File
+ */
+ ?>
+<?php if(Mage::helper('popupnotification')->isActive()): ?>
+<?php
+$cookie_time = Mage::helper('popupnotification')->getCookieTime();
+$popup_width = Mage::helper('popupnotification')->getWidth();
+$popup_height = Mage::helper('popupnotification')->getHeight();
+?>
+<script type="text/javascript"> 
+    jQuery(document).ready(function() { 
+        var check_cookie = "<?php echo Mage::getModel('core/cookie')->get('popupnotification'); ?>";
+ 
+        if(!check_cookie) {
+            beginNewsletterForm();
+            <?php Mage::getModel('core/cookie')->set('popupnotification', 'true', $cookie_time);?>
+        }
+    });
+ 
+    function beginNewsletterForm () {
+        jQuery.fancybox({
+            'width': '<?php echo $popup_width;?>',
+            'height': '<?php echo $popup_height;?>',
+            'padding': '0px',
+            'autoDimensions': false,
+            'autoScale': false,
+            'autoSize': false,
+            'transitionIn': 'fade',
+            'transitionOut': 'fade',
+            'showCloseButton': true,
+            'type': 'inline',
+            'href': '#popupnotification'
+        });
+        jQuery("#popupnotification").trigger('click');
+    }
+</script>
+ 
+<div style="display:none;">
+      <div id="popupnotification" class="container">
+            <div class="sub-container">
+                  <div class="content">
+                       <!-- add your content here -->
+                  </div>
+            </div>
+      </div>
+</div> 
+<?php endif; ?>
